@@ -1,0 +1,36 @@
+{
+  "name": "patrol",
+  "version": "1.0.0",
+  "description": "A Discord bot to track active server moderators",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "ts-node-dev --respawn src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "register": "node dist/register.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FinOCE/patrol.git"
+  },
+  "keywords": [
+    "discord",
+    "moderation",
+    "activity"
+  ],
+  "author": "FinOCE",
+  "bugs": {
+    "url": "https://github.com/FinOCE/patrol/issues"
+  },
+  "homepage": "https://github.com/FinOCE/patrol#readme",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.20",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.3.3"
+  }
+}
