@@ -21,7 +21,7 @@ const command = new SlashCommandBuilder()
     builder
       .setName("active")
       .setDescription("Set the role to give to active mods")
-      .addRoleOption(role => role.setName("role").setDescription("The role togive to active mods").setRequired(true))
+      .addRoleOption(role => role.setName("role").setDescription("The role to give to active mods").setRequired(true))
   )
 
 // Register mod role commands

@@ -1,6 +1,5 @@
-import { Client } from "discord.js"
+import { Client, EmbedBuilder } from "discord.js"
 import dotenv from "dotenv"
-import embed from "./embed"
 import { PrismaClient } from "@prisma/client"
 
 dotenv.config()
@@ -54,6 +53,8 @@ client.on("guildDelete", async guild => {
   await prisma.guild.delete({
     where: { id: guild.id }
   })
+
+  console.log(`Deleted tracking of guild ${guild.id}`)
 })
 
 // Handle presence updates
@@ -105,16 +106,10 @@ client.on("interactionCreate", async interaction => {
     const clientMember = await guild.members.fetch(client.user.id)
 
     if (clientMember.roles.highest.position <= role.position) {
-      interaction
-        .reply({
-          embeds: [
-            embed(
-              `I can't assign <@&${role.id}> as the active role as it is higher than my highest role. Please move my managed role above it so I can apply it to moderators.`
-            )
-          ],
-          ephemeral: true
-        })
-        .catch(console.error)
+      const embed = new EmbedBuilder().setDescription(
+        `I can't assign <@&${role.id}> as the active role as it is higher than my highest role. Please move my managed role above it so I can apply it to moderators.`
+      )
+      interaction.reply({ embeds: [embed], ephemeral: true }).catch(console.error)
       return
     }
   }
@@ -155,9 +150,8 @@ client.on("interactionCreate", async interaction => {
 
   console.log(`Setup role ${role.id} as ${command} role in guild ${guild.id}`)
 
-  interaction
-    .reply({ embeds: [embed(`Successfully set <@&${role.id}> as the ${command} mod role!`)], ephemeral: true })
-    .catch(console.error)
+  const embed = new EmbedBuilder().setDescription(`Successfully set <@&${role.id}> as the ${command} mod role!`)
+  interaction.reply({ embeds: [embed], ephemeral: true }).catch(console.error)
 })
 
 // Login bot
