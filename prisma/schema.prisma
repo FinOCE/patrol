@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Moderator {
+  id     String           @id
+  guilds ModeratorGuild[]
+}
+
+model Guild {
+  id          String           @id
+  roleActive  String?
+  roleDefault String?
+  moderators  ModeratorGuild[]
+}
+
+model ModeratorGuild {
+  moderatorId String
+  guildId     String
+  moderator   Moderator @relation(fields: [moderatorId], references: [id], onDelete: Cascade)
+  guild       Guild     @relation(fields: [guildId], references: [id], onDelete: Cascade)
+
+  @@id([moderatorId, guildId])
+}
