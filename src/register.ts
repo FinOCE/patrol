@@ -5,8 +5,13 @@ dotenv.config()
 
 const rest = new REST().setToken(process.env.TOKEN)
 
-// Create commands to manage mod roles
-const command = new SlashCommandBuilder()
+// Create commands
+const about = new SlashCommandBuilder()
+  .setName("about")
+  .setDescription("About this bot")
+  .setDMPermission(true)
+  .setNSFW(false)
+const setmodrole = new SlashCommandBuilder()
   .setName("setmodrole")
   .setDescription("Set the mod roles for this server")
   .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
@@ -24,7 +29,7 @@ const command = new SlashCommandBuilder()
       .addRoleOption(role => role.setName("role").setDescription("The role to give to active mods").setRequired(true))
   )
 
-// Register mod role commands
+// Register commands
 rest
-  .put(Routes.applicationCommands(process.env.CLIENT_ID), { body: [command.toJSON()] })
-  .then(() => console.log("Successfully registered mod role commands"))
+  .put(Routes.applicationCommands(process.env.CLIENT_ID), { body: [about.toJSON(), setmodrole.toJSON()] })
+  .then(() => console.log("Successfully registered commands"))

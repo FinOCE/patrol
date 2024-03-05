@@ -1,6 +1,7 @@
 import { Client, EmbedBuilder } from "discord.js"
 import dotenv from "dotenv"
 import { PrismaClient } from "@prisma/client"
+import { AboutEmbed } from "./embeds/AboutEmbed"
 
 dotenv.config()
 
@@ -94,7 +95,16 @@ client.on("presenceUpdate", async (_, newPresence) => {
 
 // Handle slash commands
 client.on("interactionCreate", async interaction => {
-  if (interaction.user.bot || !interaction.isChatInputCommand()) return
+  if (interaction.user.bot) return
+
+  // Handle about me
+  if (interaction.isChatInputCommand() && interaction.commandName === "about") {
+    await interaction.reply({ embeds: [AboutEmbed()], ephemeral: true })
+    return
+  }
+
+  // Handle remaining commands
+  if (!interaction.isChatInputCommand()) return
   if (interaction.commandName !== "setmodrole") return
 
   const guild = interaction.guild!
