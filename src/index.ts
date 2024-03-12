@@ -105,7 +105,7 @@ client.on("interactionCreate", async interaction => {
 
   // Handle remaining commands
   if (!interaction.isChatInputCommand()) return
-  if (interaction.commandName !== "setmodrole") return
+  if (interaction.commandName !== "set") return
 
   const guild = interaction.guild!
   const role = (await guild.roles.fetch(interaction.options.getRole("role", true).id))!
@@ -130,11 +130,11 @@ client.on("interactionCreate", async interaction => {
     create: {
       id: interaction.guildId!,
       roleActive: command === "active" ? role.id : undefined,
-      roleDefault: command === "default" ? role.id : undefined
+      roleDefault: command === "watch" ? role.id : undefined
     },
     update: {
       roleActive: command === "active" ? role.id : undefined,
-      roleDefault: command === "default" ? role.id : undefined
+      roleDefault: command === "watch" ? role.id : undefined
     }
   })
 
@@ -160,7 +160,7 @@ client.on("interactionCreate", async interaction => {
 
   console.log(`Setup role ${role.id} as ${command} role in guild ${guild.id}`)
 
-  const embed = new EmbedBuilder().setDescription(`Successfully set <@&${role.id}> as the ${command} mod role!`)
+  const embed = new EmbedBuilder().setDescription(`Successfully set <@&${role.id}> as the ${command} role!`)
   interaction.reply({ embeds: [embed], ephemeral: true }).catch(console.error)
 })
 

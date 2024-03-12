@@ -11,16 +11,18 @@ const about = new SlashCommandBuilder()
   .setDescription("About this bot")
   .setDMPermission(true)
   .setNSFW(false)
+
 const setmodrole = new SlashCommandBuilder()
-  .setName("setmodrole")
+  .setName("set")
   .setDescription("Set the mod roles for this server")
   .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
   .setDMPermission(false)
+  .setNSFW(false)
   .addSubcommand(builder =>
     builder
-      .setName("default")
-      .setDescription("Set the default role all mods have")
-      .addRoleOption(role => role.setName("role").setDescription("The default role all mods have").setRequired(true))
+      .setName("watch")
+      .setDescription("Set the mod role to watch activity for")
+      .addRoleOption(role => role.setName("role").setDescription("The normal role all mods have").setRequired(true))
   )
   .addSubcommand(builder =>
     builder
